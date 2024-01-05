@@ -283,6 +283,66 @@ require('lazy').setup({
     config = function()
       require("nvim-tree").setup {}
     end,
+  },
+  {
+	  "Pocco81/auto-save.nvim",
+	  config = function()
+		  require("auto-save").setup {
+			  -- your config goes here
+			  -- or just leave it empty :)
+		  }
+	  end,
+  },
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require("bufferline").setup {
+        options = {
+          diagnostics = "nvim_lsp"
+        }
+      }
+    end,
+  },
+  {
+    'nvimtools/none-ls.nvim',
+    version = "*",
+    config = function()
+      local null_ls = require("null-ls")
+      local venv_path = 'import sys; sys.path.append("/opt/homebrew/lib/python3.11/site-packages"); import pylint_venv; pylint_venv.inithook(force_venv_activation=True, quiet=True)'
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.black,
+          null_ls.builtins.diagnostics.pylint.with({
+			      extra_args = { "--init-hook", venv_path },
+		      }),
+        }
+      })
+    end,
+  },
+  {
+    'f-person/git-blame.nvim',
+    version = "*",
+    config = true,
+  },
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
   }
 }, {})
 
@@ -363,7 +423,12 @@ function _lazygit_toggle()
 end
 vim.keymap.set('n', '<leader>tt', toggleterm.toggle, { desc = 'toggle terminal' })
 vim.api.nvim_set_keymap('n', '<leader>tg', "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true, desc = 'toggle lazygit' })
-
+-- buffer maps
+vim.keymap.set('n', '<leader>n', "<cmd>bnext<CR>" , { desc = '[N]ext tab', noremap = true })
+vim.keymap.set('n', '<leader>p', "<cmd>bprevious<CR>" , { desc = '[P]revious tab', noremap = true })
+vim.keymap.set('n', '<leader>X', "<cmd>bdelete<CR>" , { desc = 'Close tab', noremap = true })
+-- formatting maps
+vim.keymap.set('n', '<leader>f',  vim.lsp.buf.format, { desc = '[F]ormat file', noremap = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

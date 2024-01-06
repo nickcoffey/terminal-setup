@@ -7,6 +7,7 @@ This repo holds the config files to replicate my terminal dev setup.
 - [zsh](https://www.zsh.org/)
 - [oh-my-zsh](https://ohmyz.sh/)
 - [tmux](https://github.com/tmux/tmux/wiki)
+- [tmux plugin manager](https://github.com/tmux-plugins/tpm/)
 - [neovim](https://neovim.io/)
 
 ## Config file location

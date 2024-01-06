@@ -288,6 +288,7 @@ require('lazy').setup({
 	  "Pocco81/auto-save.nvim",
 	  config = function()
 		  require("auto-save").setup {
+        enabled = true
 			  -- your config goes here
 			  -- or just leave it empty :)
 		  }
@@ -315,6 +316,8 @@ require('lazy').setup({
         sources = {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.black,
+          null_ls.builtins.formatting.prettier,
+          null_ls.builtins.diagnostics.eslint,
           null_ls.builtins.diagnostics.pylint.with({
 			      extra_args = { "--init-hook", venv_path },
 		      }),
@@ -445,6 +448,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    file_ignore_patterns = { "node_modules" },
     mappings = {
       i = {
         ['<C-u>'] = false,

@@ -45,6 +45,12 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
+-- turn off line-wrap
+vim.opt.wrap = false
+
+-- turn on relative line numbers
+vim.wo.relativenumber = true
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -274,7 +280,10 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
-  {'akinsho/toggleterm.nvim', version = "*", config = true},
+  'tpope/vim-surround',
+  'RRethy/vim-illuminate',
+  'mg979/vim-visual-multi',
+  -- {'akinsho/toggleterm.nvim', version = "*", config = true},
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
@@ -288,24 +297,33 @@ require('lazy').setup({
 	  "Pocco81/auto-save.nvim",
 	  config = function()
 		  require("auto-save").setup {
-        enabled = true
-			  -- your config goes here
-			  -- or just leave it empty :)
+        enabled = true,
+        condition = function(buf)
+          if vim.bo[buf].filetype == "harpoon" then
+            return false
+          end
+          return true
+        end
 		  }
 	  end,
   },
   {
-    'akinsho/bufferline.nvim',
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      require("bufferline").setup {
-        options = {
-          diagnostics = "nvim_lsp"
-        }
-      }
-    end,
+      "ThePrimeagen/harpoon",
+      branch = "harpoon2",
+      dependencies = { "nvim-lua/plenary.nvim" }
   },
+  -- {
+  --   'akinsho/bufferline.nvim',
+  --   version = "*",
+  --   dependencies = 'nvim-tree/nvim-web-devicons',
+  --   config = function()
+  --     require("bufferline").setup {
+  --       options = {
+  --         diagnostics = "nvim_lsp"
+  --       }
+  --     }
+  --   end,
+  -- },
   {
     'nvimtools/none-ls.nvim',
     version = "*",
@@ -317,7 +335,7 @@ require('lazy').setup({
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.black,
           null_ls.builtins.formatting.prettier,
-          null_ls.builtins.diagnostics.eslint,
+          null_ls.builtins.formatting.eslint,
           null_ls.builtins.diagnostics.pylint.with({
 			      extra_args = { "--init-hook", venv_path },
 		      }),
@@ -360,7 +378,7 @@ vim.o.hlsearch = false
 vim.wo.number = true
 
 -- Enable mouse mode
-vim.o.mouse = 'a'
+vim.o.mouse = "a"
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -418,20 +436,23 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 local nvim_tree_api = require "nvim-tree.api"
 vim.keymap.set('n', '<leader>tf', nvim_tree_api.tree.toggle, { desc = 'toggle file tree' })
 -- toggleterm maps
-local toggleterm = require "toggleterm"
-local Terminal  = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float' })
-function _lazygit_toggle()
-  lazygit:toggle()
-end
-vim.keymap.set('n', '<leader>tt', toggleterm.toggle, { desc = 'toggle terminal' })
-vim.api.nvim_set_keymap('n', '<leader>tg', "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true, desc = 'toggle lazygit' })
+-- local toggleterm = require "toggleterm"
+-- local Terminal  = require('toggleterm.terminal').Terminal
+-- local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = 'float' })
+-- function _lazygit_toggle()
+--   lazygit:toggle()
+-- end
+-- vim.keymap.set('n', '<leader>tt', toggleterm.toggle, { desc = 'toggle terminal' })
+-- vim.api.nvim_set_keymap('n', '<leader>tg', "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true, desc = 'toggle lazygit' })
 -- buffer maps
-vim.keymap.set('n', '<leader>n', "<cmd>bnext<CR>" , { desc = '[N]ext tab', noremap = true })
-vim.keymap.set('n', '<leader>p', "<cmd>bprevious<CR>" , { desc = '[P]revious tab', noremap = true })
-vim.keymap.set('n', '<leader>X', "<cmd>bdelete<CR>" , { desc = 'Close tab', noremap = true })
+-- vim.keymap.set('n', '<leader>n', "<cmd>bnext<CR>" , { desc = '[N]ext tab', noremap = true })
+-- vim.keymap.set('n', '<leader>p', "<cmd>bprevious<CR>" , { desc = '[P]revious tab', noremap = true })
+vim.keymap.set('n', '<leader>X', "<cmd>bdelete<CR>" , { desc = 'Close buffer', noremap = true })
 -- formatting maps
 vim.keymap.set('n', '<leader>f',  vim.lsp.buf.format, { desc = '[F]ormat file', noremap = true })
+-- lsp maps
+-- vim.keymap.set('n', '<leader>D',  vim.lsp.buf.hover, { desc = 'View [D]efinition', noremap = true })
+
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -448,7 +469,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
-    file_ignore_patterns = { "node_modules" },
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -581,15 +601,15 @@ vim.defer_fn(function()
           ['[]'] = '@class.outer',
         },
       },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
+      -- swap = {
+      --   enable = true,
+      --   swap_next = {
+      --     ['<leader>a'] = '@parameter.inner',
+      --   },
+      --   swap_previous = {
+      --     ['<leader>A'] = '@parameter.inner',
+      --   },
+      -- },
     },
   }
 end, 0)
@@ -617,13 +637,13 @@ local on_attach = function(_, bufnr)
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+  -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -764,6 +784,54 @@ cmp.setup {
     { name = 'path' },
   },
 }
+
+-- [[ Other Custom Stuff ]]
+-- START change vim illuminate to highlight from underline
+-- change the highlight style
+vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "Visual" })
+vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "Visual" })
+vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { link = "Visual" })
+
+-- auto update the highlight style on colorscheme change
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+  pattern = { "*" },
+  callback = function()
+    vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "Visual" })
+    vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "Visual" })
+    vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { link = "Visual" })
+  end
+})
+-- END change vim illuminate to highlight from underline
+-- START Harpoon setup
+local harpoon = require("harpoon")
+harpoon:setup()
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end, { desc = 'Harpoon [A]ppend', noremap = true })
+-- vim.keymap.set("n", "<leader>p", function() harpoon:list():prepend() end, { desc = 'Harpoon [P]repend', noremap = true })
+vim.keymap.set("n", "<C-j>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-k>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-l>", function() harpoon:list():select(3) end)
+-- vim.keymap.set("n", "<C-l>", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+-- local conf = require("telescope.config").values
+-- local function toggle_telescope(harpoon_files)
+--     local file_paths = {}
+--     for _, item in ipairs(harpoon_files.items) do
+--         table.insert(file_paths, item.value)
+--     end
+--
+--     require("telescope.pickers").new({}, {
+--         prompt_title = "Harpoon",
+--         finder = require("telescope.finders").new_table({
+--             results = file_paths,
+--         }),
+--         previewer = conf.file_previewer({}),
+--         sorter = conf.generic_sorter({}),
+--     }):find()
+-- end
+-- vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+-- END Harpoon setup
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

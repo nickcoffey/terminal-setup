@@ -13,4 +13,4 @@ This repo holds the config files to replicate my terminal dev setup.
 ## Config file location
 - .zshrc -> `~/.zshrc`
 - tmux.conf -> `~/.config/tmux/tmux.conf`
-- init.lua -> `~/.config/nvim/init.lua`
+- nvim/ -> `~/.config/nvim/`

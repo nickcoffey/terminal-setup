@@ -110,6 +110,7 @@ source $ZSH/oh-my-zsh.sh
 alias ls=colorls
 alias lg=lazygit
 alias vim=nvim
+alias rfvim="rm -rf ~/.config/nvim && cp -a ~/Developer/terminal-setup/nvim ~/.config/nvim && echo 'neovim config refreshed!'"
 
 
 export PYENV_ROOT="$HOME/.pyenv"

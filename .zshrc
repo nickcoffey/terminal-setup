@@ -114,6 +114,8 @@ alias rfvim="rm -rf ~/.config/nvim && cp -a ~/Developer/terminal-setup/nvim ~/.c
 alias tmrs="tmux rename-session"
 alias tmrw="tmux rename-window"
 
+export XDG_CONFIG_HOME="$HOME/.config"
+export GIT_EDITOR=nvim
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"

@@ -111,6 +111,8 @@ alias ls=colorls
 alias lg=lazygit
 alias vim=nvim
 alias rfvim="rm -rf ~/.config/nvim && cp -a ~/Developer/terminal-setup/nvim ~/.config/nvim && echo 'neovim config refreshed!'"
+alias tmrs="tmux rename-session"
+alias tmrw="tmux rename-window"
 
 
 export PYENV_ROOT="$HOME/.pyenv"

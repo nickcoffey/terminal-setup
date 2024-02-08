@@ -107,12 +107,17 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls=colorls
-alias lg=lazygit
+# nvim aliases
 alias vim=nvim
 alias rfvim="rm -rf ~/.config/nvim && cp -a ~/Developer/terminal-setup/nvim ~/.config/nvim && echo 'neovim config refreshed!'"
+# tmux aliases
 alias tmrs="tmux rename-session"
 alias tmrw="tmux rename-window"
+alias tmls="tmux ls"
+alias tma="tmux a -t"
+# other aliases
+alias ls=colorls
+alias lg=lazygit
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export GIT_EDITOR=nvim

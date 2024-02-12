@@ -7,8 +7,14 @@ return {
 		harpoon:setup()
 		vim.keymap.set("n", "<leader>a", function()
 			harpoon:list():append()
+			print("Added buffer to end of harpoon list")
 		end, { desc = "Harpoon [A]ppend", noremap = true })
-		-- vim.keymap.set("n", "<leader>p", function() harpoon:list():prepend() end, { desc = 'Harpoon [P]repend', noremap = true })
+
+		vim.keymap.set("n", "<leader>p", function()
+			harpoon:list():prepend()
+			print("Added buffer to beginning of harpoon list")
+		end, { desc = "Harpoon [P]repend", noremap = true })
+
 		vim.keymap.set("n", "<C-j>", function()
 			harpoon:list():select(1)
 		end)

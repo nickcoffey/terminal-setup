@@ -10,7 +10,6 @@ return {
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.black,
 				null_ls.builtins.formatting.prettier,
-				null_ls.builtins.formatting.eslint,
 				null_ls.builtins.diagnostics.pylint.with({
 					extra_args = { "--init-hook", venv_path },
 				}),

@@ -74,6 +74,7 @@ return {
 		--  define the property 'filetypes' to the map in question.
 		local servers = {
 			pyright = {},
+			eslint = {},
 			lua_ls = {
 				Lua = {
 					workspace = { checkThirdParty = false },

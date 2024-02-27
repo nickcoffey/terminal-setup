@@ -10,7 +10,6 @@ This repo holds the config files to replicate my terminal dev setup.
 - [tmux plugin manager](https://github.com/tmux-plugins/tpm/)
 - [neovim](https://neovim.io/)
 - [lazygit](https://github.com/jesseduffield/lazygit)
-- [catppuccin](https://github.com/catppuccin/catppuccin)
 
 ## Config file location
 - .zshrc -> `~/.zshrc`

@@ -2,6 +2,7 @@
 return {
 	"folke/which-key.nvim",
 	opts = {},
+	dependencies = { "echasnovski/mini.icons" },
 	config = function()
 		-- document existing key chains
 		require("which-key").add({
@@ -17,7 +18,7 @@ return {
 		-- register which-key VISUAL mode
 		-- required for visual <leader>hs (hunk stage) to work
 		require("which-key").add({
-			{ "<leader>",  desc = "VISUAL <leader>" },
+			{ "<leader>", desc = "VISUAL <leader>" },
 			{ "<leader>h", desc = "Git [H]unk" },
 		}, { mode = "v" })
 	end,

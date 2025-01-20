@@ -134,3 +134,8 @@ export NVM_DIR="$HOME/.nvm"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#686566'
+
+# chruby config (used for personal site)
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+# enables auto-switching of Rubies specified by .ruby-version files
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh

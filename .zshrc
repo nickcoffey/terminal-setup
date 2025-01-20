@@ -137,5 +137,5 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#686566'
 
 # chruby config (used for personal site)
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-# enables auto-switching of Rubies specified by .ruby-version files
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh # enables auto-switching of Rubies specified by .ruby-version files
+chruby ruby-3.3.5

@@ -12,6 +12,17 @@ return {
 		},
 	},
 	config = function()
+		local ignore_globs = {
+			"--glob",
+			"!**/.git/*",
+			"--glob",
+			"!**/.venv/*",
+			"--glob",
+			"!**/.node_modules/*",
+			"--glob",
+			"!**/__pycache__/*",
+		}
+
 		-- See `:help telescope` and `:help telescope.setup()`
 		require("telescope").setup({
 			defaults = {
@@ -99,8 +110,21 @@ return {
 			require("telescope.builtin").builtin,
 			{ desc = "[S]earch [S]elect Telescope" }
 		)
-		vim.keymap.set("n", "<leader>gf", require("telescope.builtin").git_files,
-			{ desc = "Search [G]it [F]iles" })
+		local function find_all_files()
+			require("telescope.builtin").find_files({
+				hidden = true,
+				no_ignore = true,
+				no_ignore_parent = true,
+				find_command = {
+					"rg",
+					"--files",
+					"--hidden",
+					table.unpack(ignore_globs),
+				},
+				prompt_title = "Search All Files",
+			})
+		end
+		vim.keymap.set("n", "<leader>sa", find_all_files, { desc = "[S]earch [A]ll Files" })
 		vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "[S]earch [F]iles" })
 		vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
 		vim.keymap.set(

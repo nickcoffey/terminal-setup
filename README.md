@@ -3,7 +3,7 @@ This repo holds the config files to replicate my terminal dev setup.
 
 ## Tools used
 - [Homebrew](https://brew.sh/)
-- [iTerm2](https://iterm2.com/)
+- [Ghostty](https://ghostty.org/)
 - [zsh](https://www.zsh.org/)
 - [oh-my-zsh](https://ohmyz.sh/)
 - [tmux](https://github.com/tmux/tmux/wiki)
@@ -12,6 +12,7 @@ This repo holds the config files to replicate my terminal dev setup.
 - [lazygit](https://github.com/jesseduffield/lazygit)
 
 ## Config file location
+- ghostty/config -> `~/.config/ghostty/config`
 - .zshrc -> `~/.zshrc`
 - tmux.conf -> `~/.config/tmux/tmux.conf`
 - nvim/ -> `~/.config/nvim/`

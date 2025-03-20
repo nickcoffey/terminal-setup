@@ -2,10 +2,11 @@ font-family = "JetBrains Mono"
 font-style = "Bold"
 font-size = 14
 
-theme = "OneHalfDark"
+theme = "catppuccin-mocha"
 
 adjust-cell-width = "-8%"
 adjust-cell-height = "15%"
 
 cursor-style = block
 shell-integration-features = no-cursor
+

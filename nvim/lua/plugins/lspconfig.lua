@@ -21,6 +21,7 @@ return {
 	},
 	config = function()
 		require("lspconfig").lua_ls.setup({})
+		require("lspconfig").pyright.setup({})
 
 		local nmap = function(keys, method, func, desc, args)
 			if desc then

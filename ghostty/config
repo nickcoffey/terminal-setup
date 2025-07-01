@@ -5,7 +5,7 @@ font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
-theme = "catppuccin-mocha"
+theme = dark:catppuccin-mocha,light:catppuccin-latte
 
 adjust-cell-width = "-8%"
 adjust-cell-height = "15%"

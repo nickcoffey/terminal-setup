@@ -113,10 +113,11 @@ alias rfvim="rm -rf ~/.config/nvim && cp -a ~/Developer/terminal-setup/nvim ~/.c
 # tmux aliases
 alias tmrs="tmux rename-session"
 alias tmrw="tmux rename-window"
+alias tmrt="~/bin/tmux-theme-switch.sh"
 alias tmls="tmux ls"
 alias tma="tmux a -t"
 # other aliases
-alias ls=colorls
+# alias ls=colorls
 alias lg=lazygit
 
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -135,7 +136,3 @@ export NVM_DIR="$HOME/.nvm"
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#686566'
 
-# chruby config (used for personal site)
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh # enables auto-switching of Rubies specified by .ruby-version files
-chruby ruby-3.3.5

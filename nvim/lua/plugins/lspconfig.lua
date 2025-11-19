@@ -20,8 +20,7 @@ return {
 		},
 	},
 	config = function()
-		require("lspconfig").lua_ls.setup({})
-		require("lspconfig").pyright.setup({})
+		vim.lsp.enable({ "lua_ls", "pyright", "ruff", "ts_ls", "sqlls", "yamlls" })
 
 		local nmap = function(keys, method, func, desc, args)
 			if desc then
